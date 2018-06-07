@@ -37,7 +37,6 @@ import Cogent.CorresProof    as CP (corresProof)
 import Cogent.CorresSetup    as CS (corresSetup)
 import Cogent.Deep           as DP (deep)
 import Cogent.Desugar        as DS (desugar)
-import Cogent.DocGent        as DG (docGent)
 import Cogent.GetOpt
 import Cogent.Glue           as GL (defaultExts, defaultTypnames, GlState, glue, GlueMode(..), mkGlState, parseFile, parseFile')
 import Cogent.Hangman              (hangman)
@@ -601,7 +600,6 @@ parseArgs args = case getOpt' Permute options args of
             Left err -> printError prettyRE [err] >> exitFailure
             Right reorged -> do when (Ast stg `elem` cmds) $ genAst stg (map (stripAllLoc . thd3) reorged)
                                 when (Pretty stg `elem` cmds) $ genPretty stg (map (stripAllLoc . thd3) reorged)
-                                when (Documentation `elem` cmds) $ DG.docGent reorged
                                 let noDocs (a,_,c) = (a,c)
                                 when (Compile (succ stg) `elem` cmds) $ do
                                   ctygen <- mapM parseCustTyGen __cogent_cust_ty_gen
